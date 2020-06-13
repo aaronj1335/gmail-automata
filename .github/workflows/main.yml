@@ -1,0 +1,30 @@
+name: Checkout, install deps & test
+
+# Triggers the workflow on push or pull request events but only for the master
+# branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+
+    # Checks-out repository under $GITHUB_WORKSPACE
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Test
+      run: npm test
