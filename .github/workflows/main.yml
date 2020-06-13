@@ -9,7 +9,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  test:
+    name: Checkout, install dependencies, and test
+
     runs-on: ubuntu-latest
 
     steps:
