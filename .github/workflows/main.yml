@@ -1,4 +1,4 @@
-name: Test
+name: Checkout, install deps & test
 
 # Triggers the workflow on push or pull request events but only for the master
 # branch
@@ -9,9 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-    name: Checkout, install dependencies, and test
-
+  main:
     runs-on: ubuntu-latest
 
     steps:
