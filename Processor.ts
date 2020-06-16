@@ -37,8 +37,9 @@ export class Processor {
                     break;
                 }
                 if (rule.condition.match(message_data)) {
-                    console.log(`rule ${rule} matches message ${message_data}, apply action ${rule.thread_action}`);
+                    console.log(`Rule ${rule} matches message ${message_data}, apply action ${rule.thread_action}`);
                     thread_data.thread_action.mergeFrom(rule.thread_action);
+                    console.log(`Thread action after merging: ${thread_data.thread_action}`)
                     let endThread = false;
                     switch (rule.thread_action.action_after_match) {
                         case ActionAfterMatchType.DONE:
@@ -168,22 +169,8 @@ export class Processor {
             expect(thread_data.thread_action.action_after_match).toBe(ActionAfterMatchType.DEFAULT);
             expect(thread_data.thread_action.important).toBe(BooleanActionType.DEFAULT);
             expect(thread_data.thread_action.label_names).toEqual(new Set(['abc', 'xyz']));
-            expect(thread_data.thread_action.move_to).toBe(InboxActionType.DEFAULT);
+            expect(thread_data.thread_action.move_to).toBe(InboxActionType.NOTHING);
             expect(thread_data.thread_action.read).toBe(BooleanActionType.DEFAULT);
-        })
-        it('Throws error when message matches action but has no actions', () => {
-            expect(() => {
-                test_proc([
-                    {
-                        conditions: '(sender xyz@gmail.com)',
-                        stage: '5',
-                    },
-                ], [
-                    {
-                        getFrom: () => 'xyz@gmail.com',
-                        }
-                ])
-            }).toThrow();
         })
     }
 }
